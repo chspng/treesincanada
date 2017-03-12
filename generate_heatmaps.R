@@ -14,6 +14,7 @@ alltrees <- read.csv("trees_by_ecozone_and_age.csv", sep="\t");
 # Plot totals separately as barcharts
 alltrees <- alltrees[,!colnames(alltrees) %in% c("Other", "Total")];
 alltrees <- alltrees[!alltrees$Species.group %in% c("Unclassified","Other hardwoods", "Unspecified conifers", "Unspecified hardwoods", "Subtotal", "Total"),];
+alltrees <- alltrees[!alltrees$Terrestrial.ecozone %in% c("Canada"),];
 
 # Subset data
 # by each terrestrial ecozone
@@ -21,6 +22,7 @@ alltrees <- alltrees[!alltrees$Species.group %in% c("Unclassified","Other hardwo
 ecozones <- unique(alltrees$Terrestrial.ecozone);
 treetypes <- unique(alltrees$Species.group);
 
+pdf("plots.pdf");
 for (tree in treetypes){
 
 	currentsubset <- alltrees[which(alltrees$Species.group == tree),];
@@ -28,23 +30,36 @@ for (tree in treetypes){
 	currentsubset <- currentsubset[,-2];
 	
 	# make a separate heatmap
-	for (i in nrow(currentsubset)){
-
-		sub <- as.matrix(sapply(currentsubset[,-1], as.numeric));
-		rownames(sub) <- currentsubset[,1]
-		heatmap(x = sub, main = tree, Rowv = NA, Colv = NA, scale="column");
-
-		# d3heatmap(sub, scale = "column", dendrogram = "none", color = "Blues")
-
-	}
+	sub <- as.matrix(sapply(currentsubset[,-1], as.numeric));
+	rownames(sub) <- currentsubset[,1]
+	
+	heatmap(x = sub, main = tree, Rowv = NA, Colv = NA, scale="column", col=colorRampPalette(brewer.pal(9,"Greens"))(100));
+	
 }
+dev.off();
+
+
+combo <- alltrees[, c(-2)];
+
+# edit row names so that they don't repeat
+rownames(combo) <- make.names(names = combo[,1],unique = TRUE)
+combo <- as.matrix(sapply(combo[,-1], as.numeric));
+
+# this current heatmap is flipped - I want the age ranges to be repeated, and the ecozones to only appear once 
+# i may need to reformat the table to get this
+
+# WORK FROM THIS POINT: CREATING A HEATMAP THAT CONTAINS EVERYTHING
+# testing git 
+
+pdf("comboplots.pdf");
+heatmap(x = combo, Rowv = NA, Colv = NA, scale="column", col=colorRampPalette(brewer.pal(9,"Greens"))(100));
+dev.off();
+
+
+# combine all plots into one output
+# OR set standard colour scale
 
 # for zones that don't have particular tree types, make it grey
-# Ignore certain tree type (ex. "other")
 
-# Generate heatmap
-# Select colours
 # Set breakpoints for binning
-# Set meaningful titles (for later compositing)
 
-# Output/save heatmaps
