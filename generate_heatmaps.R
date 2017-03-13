@@ -73,20 +73,99 @@ dev.off();
 # start a new row for every new ecozone
 
 # for each tree type, and for each age range create a list of colnames
-tree_and_age <- vector();
-i <- 1; 
-for (tree in treetypes){
-	for (age in colnames(alltrees[,c(-1,-2)])){
-		tree_and_age[i] <- (paste(tree, age));
-		i <- i + 1;
+
+# for each possible combination of tree type and age range and region
+# check if the value exists
+# if it does, add it to the vector
+# if not, insert NA or 0
+
+# initialize vectors
+
+# make list of colnames for each tree and age per region
+# tree_and_age <- vector();
+# counter <- 1;
+
+# for (region in ecozones){
+# 	for (tree in treetypes){
+# 		for (age in colnames(alltrees[,c(-1,-2)])){
+# 			tree_and_age[counter] <- (paste(tree, age));
+# 			counter <- counter + 1;
+# 		}
+# 	}
+# }
+
+
+# format counts of trees into list
+# tree_count <- vector();
+
+# There are 12 regions to iterate through: don't refer to them by levels() because this will include the regions I removed earlier
+# for (region_counter in 1:length(ecozones)){
+# 	for (tree_counter in 1:length(treetypes)){
+# 		if (alltrees[region_counter,2] == treetypes[tree_counter]){
+# 			# cat(alltrees[region_counter,tree_counter], treetypes[tree_counter], "\n", sep=" ");
+# 			print("matches");
+# 		} else {
+# 			print("nope");
+
+# 		}
+# 	}
+# }
+
+# counters
+# i <- 1; 
+# current_ecozone <- 1;
+# for (region in ecozones){
+
+# 	current_treetype <- 1;
+# 	for (tree in treetypes){
+
+# 		for (age_row in dim(alltrees[,c(-1,-2)])[2]){
+			
+# 			# check if the tree is listed in the region
+# 			if (alltrees$Terrestrial.ecozone[current_ecozone] == region){
+				
+# 				if (alltrees$Species.group[current_treetype] == tree){
+# 					cat(paste(region, tree, alltrees[age_row + 2, current_treetype], "\n", sep = " "));
+
+# 					# this part isn't working
+# 					num_trees[i] <- alltrees[age_row + 2, current_treetype];
+# 				} else {
+# 					num_trees[i] <- NA;
+# 				}
+# 			}
+
+# 			i <- i + 1;
+# 		}
+# 		current_treetype <- current_treetype + 1;
+# 	}
+# 	current_ecozone <- current_ecozone + 1;
+# }
+
+alltrees_reformatted <- data.frame(
+	ecozone = rep(ecozones, each = (length(treetypes) * length(alltrees[,c(-1,-2)]))),
+	tree = rep(rep(treetypes, each = length(alltrees[,c(-1,-2)])), length(ecozones)),
+	age_range = rep(colnames(alltrees[,c(-1,-2)]), length(ecozones) * length(treetypes))
+	# treetypeandage = tree_and_age,
+	# value = num_trees
+	);
+
+# search for each iteration of numbers to appear in the original data frame
+# navigate to that part of the original data frame
+# see if it exists
+# if not, enter NA
+subset <- dataframe();
+
+for (region in ecozones){
+	# subset the original dataframe
+	subset <- alltrees[alltrees$Terrestrial.ecozone == region,];
+
+	for (tree in treetypes){
+		if (tree %in% subset$Species.group){
+			
+		}
 	}
 }
 
-alltrees_reformatted <- data.frame(
-	ecozones = ecozones,
-	treetypeandage = tree_and_age,
-	value = 
-	);
 
 ggplot(alltrees_reformatted, 
 	aes(x = ecozones, 
@@ -107,4 +186,8 @@ cat("Script has run \n");
 # for zones that don't have particular tree types, make it grey
 
 # Set breakpoints for binning
+
+# Clean code
+
+# Test code
 
