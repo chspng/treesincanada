@@ -141,19 +141,11 @@ dev.off();
 # 	current_ecozone <- current_ecozone + 1;
 # }
 
-alltrees_reformatted <- data.frame(
-	ecozone = rep(ecozones, each = (length(treetypes) * length(alltrees[,c(-1,-2)]))),
-	tree = rep(rep(treetypes, each = length(alltrees[,c(-1,-2)])), length(ecozones)),
-	age_range = rep(colnames(alltrees[,c(-1,-2)]), length(ecozones) * length(treetypes))
-	# treetypeandage = tree_and_age,
-	# value = num_trees
-	);
 
-# search for each iteration of numbers to appear in the original data frame
-# navigate to that part of the original data frame
-# see if it exists
-# if not, enter NA
-subset <- dataframe();
+# CURRENT WORKSPACE
+# TRYING TO FIND A WAY TO BUILD A LIST OF VALUES
+
+tree_volume <- vector();
 
 for (region in ecozones){
 	# subset the original dataframe
@@ -161,11 +153,29 @@ for (region in ecozones){
 
 	for (tree in treetypes){
 		if (tree %in% subset$Species.group){
-			
+
+			# THIS LINE ISN'T PROPERLY PICKING UP THE ROWS YET
+			tree_volume <- append(tree_volume, alltrees[tree %in% alltrees$Species.group, c(-1,-2)]);
+
+		} else {
+			tree_volume <- append(tree_volume, rep(NA, length(alltrees[,c(-1,-2)])));
 		}
 	}
 }
 
+
+alltrees_reformatted <- data.frame(
+	ecozone = rep(ecozones, each = (length(treetypes) * length(alltrees[,c(-1,-2)]))),
+	tree = rep(rep(treetypes, each = length(alltrees[,c(-1,-2)])), length(ecozones)),
+	age_range = rep(colnames(alltrees[,c(-1,-2)]), length(ecozones) * length(treetypes)),
+	# treetypeandage = tree_and_age,
+	value = tree_volume
+	);
+
+# search for each iteration of numbers to appear in the original data frame
+# navigate to that part of the original data frame
+# see if it exists
+# if not, enter NA
 
 ggplot(alltrees_reformatted, 
 	aes(x = ecozones, 
