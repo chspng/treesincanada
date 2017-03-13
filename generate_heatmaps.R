@@ -142,24 +142,21 @@ dev.off();
 # }
 
 
-# CURRENT WORKSPACE
-# TRYING TO FIND A WAY TO BUILD A LIST OF VALUES
-
 tree_volume <- vector();
 
 for (region in ecozones){
-	# subset the original dataframe
-	subset <- alltrees[alltrees$Terrestrial.ecozone == region,];
-
+	
 	for (tree in treetypes){
-		if (tree %in% subset$Species.group){
 
-			# THIS LINE ISN'T PROPERLY PICKING UP THE ROWS YET
-			tree_volume <- append(tree_volume, alltrees[tree %in% alltrees$Species.group, c(-1,-2)]);
-
-		} else {
+		row <- which(alltrees$Terrestrial.ecozone == region & alltrees$Species.group == tree, arr.ind = TRUE);
+		
+		if (length(row) == 1){
+			tree_volume <- append(tree_volume, unlist(alltrees[row, c(-1,-2)], use.names = FALSE));	
+		} else if (length(row) == 0) {
 			tree_volume <- append(tree_volume, rep(NA, length(alltrees[,c(-1,-2)])));
-		}
+		} else {
+			print("Error: returned more than one row")
+		}		
 	}
 }
 
@@ -172,14 +169,11 @@ alltrees_reformatted <- data.frame(
 	value = tree_volume
 	);
 
-# search for each iteration of numbers to appear in the original data frame
-# navigate to that part of the original data frame
-# see if it exists
-# if not, enter NA
+alltrees_reformatted$tree_and_age <- paste(alltrees_reformatted$tree, alltrees_reformatted$age_range);
 
 ggplot(alltrees_reformatted, 
-	aes(x = ecozones, 
-		y = treetypeandage,
+	aes(x = ecozone, 
+		y = tree_and_age,
 		fill = value)) 
 	+ geom_tile() 
 	+ scale_fill_gradient(low = "white", high = "steelblue")
