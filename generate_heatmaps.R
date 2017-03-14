@@ -2,6 +2,7 @@
 # This script generates heatmaps that display the number of trees by genus, age, and terrestrial ecozone
 library(RColorBrewer)
 library(ggplot2)
+# library(BoutrosLab.plotting.general)
 
 # Load & format dataset
 
@@ -151,32 +152,62 @@ for (region in ecozones){
 		row <- which(alltrees$Terrestrial.ecozone == region & alltrees$Species.group == tree, arr.ind = TRUE);
 		
 		if (length(row) == 1){
+			
 			tree_volume <- append(tree_volume, unlist(alltrees[row, c(-1,-2)], use.names = FALSE));	
+
+			# treeage_vs_region[rowcount] <- append(treeage_vs_region, unlist(alltrees[row, c(-1,-2)], use.names = FALSE));	
+
 		} else if (length(row) == 0) {
 			tree_volume <- append(tree_volume, rep(NA, length(alltrees[,c(-1,-2)])));
+
+			# treeage_vs_region[rowcount] <- append(treeage_vs_region, rep(NA, length(alltrees[,c(-1,-2)])));	
+
 		} else {
 			print("Error: returned more than one row")
 		}		
 	}
 }
 
+# treeage_vs_region <- matrix(
+# 	tree_volume,
+# 	nrow = length(ecozones),
+# 	ncol = length(treetypes) * length(alltrees[,c(-1,-2)]),
+# 	byrow = TRUE
+# 	);
+
 
 alltrees_reformatted <- data.frame(
 	ecozone = rep(ecozones, each = (length(treetypes) * length(alltrees[,c(-1,-2)]))),
 	tree = rep(rep(treetypes, each = length(alltrees[,c(-1,-2)])), length(ecozones)),
 	age_range = rep(colnames(alltrees[,c(-1,-2)]), length(ecozones) * length(treetypes)),
-	# treetypeandage = tree_and_age,
 	value = tree_volume
 	);
 
 alltrees_reformatted$tree_and_age <- paste(alltrees_reformatted$tree, alltrees_reformatted$age_range);
 
+
+# plotting code
+# create.heatmap(
+# 	x = treeage_vs_region,
+# 	clustering.method = 'none',
+
+# 	)
+
+# plot data
+
+
+
+hm.palette <- colorRampPalette(brewer.pal(9, 'YlOrRd'), space='Lab')  
+
 ggplot(alltrees_reformatted, 
 	aes(x = ecozone, 
 		y = tree_and_age,
-		fill = value)) 
-	+ geom_tile() 
-	+ scale_fill_gradient(low = "white", high = "steelblue")
+		fill = value
+		)) + geom_tile() + 
+		scale_fill_gradientn(colours = hm.palette(100)) + 
+		theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+	# + scale_fill_gradient(low = "white", high = "steelblue")
 
 # return to previous directory
 setwd(dir);
