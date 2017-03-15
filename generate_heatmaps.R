@@ -85,7 +85,9 @@ alltrees_reformatted$tree_and_age <- paste(alltrees_reformatted$tree, alltrees_r
 
 hm.palette <- colorRampPalette(brewer.pal(9, 'YlOrRd'), space='Lab')  
 
-alltrees_reformatted$value1 <- cut(alltrees_reformatted$value, breaks = as.vector(quantile(vals[vals>0])))
+
+
+alltrees_reformatted$value1 <- cut(alltrees_reformatted$value, breaks = as.vector(quantile(alltrees_reformatted$value[alltrees_reformatted$value>0], na.rm=T)))
 
 ggplot(alltrees_reformatted, 
 	aes(x = ecozone, 
