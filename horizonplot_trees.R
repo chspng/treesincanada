@@ -52,26 +52,40 @@ alltrees_reformatted$tree_and_age <- paste(alltrees_reformatted$tree, alltrees_r
 dir <- getwd();
 setwd("~/Documents/BMC/MSC\ Infovis/Assign2-trees/R\ output/");
 
+
+
 spruce_test <- alltrees_reformatted[which(alltrees_reformatted$tree == 'Spruce'), ]
 spruce_test_m <- matrix(spruce_test$value, ncol = length(ecozones))
 colnames(spruce_test_m) <- ecozones;
 
-cols <- colorRampPalette(c("white", "lightgoldenrod1", "darkgreen"));
+cols <- colorRampPalette(
+	c("white", "white", "white", "white", "white", "white", "white", "white", 
+	"lightgoldenrod1","#4fb258", "#0c734e", "#2c3666", "#292359", "#311d4c", "#3f0d3d", "#261118"));
 
 horizplot <- horizonplot(
+	main = "title",
 	x = ts(spruce_test_m),
-	nbands = 160L,
+	nbands = 400L,
 	origin = 0,
-	horizonscale = 25,
+	horizonscale = 10,
 	scales = list(y = list(relation = "same")),
 	strip.left = FALSE,
     ylab = list(rev(colnames(spruce_test_m)), rot = 0, cex = 0.7),
-    # col.regions = grey.colors(60, start = 0.9, end = 0.3),	 
-    col.regions = cols(320),
+    col.regions = cols(800),    
     colorkey = TRUE
 	) 
 
-trellis.device(device="pdf", file=paste(Sys.time(), "trees_in_canada_horizonplot.pdf", sep="-"))
+# As reference: 
+# > quantile(alltrees_reformatted$value[alltrees_reformatted$value > 0], na.rm = T)
+#       0%      25%      50%      75%     100% 
+#    0.010    0.820    5.900   32.035 3858.640 
+# > 
+
+trellis.device(
+	device="pdf", 
+	height = 10,
+	width = 3,
+	file=paste(Sys.time(), "trees_in_canada_horizonplot.pdf", sep="-"))
 print(horizplot)
 
 dev.off();
@@ -82,3 +96,4 @@ dev.off();
 # return to previous directory
 setwd(dir);
 cat("Horizonplot script finished!\n");
+
