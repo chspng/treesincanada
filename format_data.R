@@ -36,7 +36,7 @@ for (region in ecozones){
 alltrees_reformatted <- data.frame(
 	ecozone = rep(ecozones, each = (length(treetypes) * length(alltrees[,c(-1,-2)]))),
 	tree = rep(rep(treetypes, each = length(alltrees[,c(-1,-2)])), length(ecozones)),
-	age_range = rep(colnames(alltrees[,c(-1,-2)]), length(ecozones) * length(treetypes)),
+	age_range = rep( paste(LETTERS[1:11], colnames(alltrees[,c(-1,-2)])), length(ecozones) * length(treetypes)),
 	value = tree_volume
 	);
 
