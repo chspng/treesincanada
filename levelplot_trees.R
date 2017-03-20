@@ -1,9 +1,11 @@
+# develop colour palette to maximize distinction
+
 cols <- colorRampPalette(c("white","lightgoldenrod1","#4fb258", "#0c734e", "#2c3666", "#292359", "#311d4c", "#3f0d3d", "#261118"));
 
 trellis.device(
 	device="pdf", 
 	height = 10,
-	width = 3,
+	width = 5,
 	file=paste(Sys.time(), "trees_in_canada_heatmap.pdf", sep="-"))
 
 for (current_tree in treetypes){
@@ -17,8 +19,14 @@ for (current_tree in treetypes){
 		main = current_tree,
 		colorkey = TRUE,
 		col.regions = cols(800),
-		# at = c(0,0.0001, 100, 200, 400, 800, 1600, 2500, 4000),
-		cuts = 20
+		region = TRUE,
+		border = "white",
+		border.lwd = 2,
+		at = seq(0, 4000, 50),
+		cuts = 20,
+		scales = list(
+			tck = 0
+			)
 		); 
 	
 	print(heatmap);
