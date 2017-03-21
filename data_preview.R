@@ -50,6 +50,17 @@ for (zoom in zoom_steps){
 
 	print(bar2);
 
+	#	NOTE THAT THE BASELINE 0 IS EXAGERATED RIGHT NOW - NEED TO REMOVE 
+	bar3 <- barchart(
+		x = Total ~ Species.group , 
+		data = tree_totals,
+		scales = list(
+			rot = 90
+			)
+		);
+
+	print(bar3);
+
 # > quantile(alltrees_reformatted$value, na.rm = T)
 #       0%      25%      50%      75%     100% 
 #    0.000    0.000    1.015   13.945 3858.640 

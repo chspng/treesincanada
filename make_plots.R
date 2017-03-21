@@ -10,7 +10,7 @@ dir <- getwd();
 setwd("~/Documents/BMC/MSC\ Infovis/Assign2-trees/R\ output/");
 
 # source("~/code/treesincanada/horizonplot_trees.R")
-source("~/code/treesincanada/levelplot_trees.R")
-# source("~/code/treesincanada/data_preview.R")
+# source("~/code/treesincanada/levelplot_trees.R")
+source("~/code/treesincanada/data_preview.R")
 
 setwd(dir);

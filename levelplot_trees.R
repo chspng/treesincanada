@@ -61,7 +61,7 @@ for (current_tree in treetypes){
 		col.regions = palette6,
 		region = TRUE,
 		border = "white",
-		border.lwd = 1,
+		border.lwd = 0.5,
 		# at = seq(0, 4000, 50),
 		at = c(0, 
 			0.01, 0.25, 0.5, 0.75, 1,

@@ -1,4 +1,10 @@
 alltrees <- read.csv("~/Documents/BMC/MSC\ Infovis/Assign2-trees/data/trees_by_ecozone_and_age.csv", sep="\t");
+
+# save tree totals for overview chart
+tree_totals <- alltrees[which(alltrees$Terrestrial.ecozone == "Canada"), ];
+tree_totals <- tree_totals[, which(names(tree_totals) %in% c("Species.group", "Total")) ];
+tree_totals <- tree_totals[!tree_totals$Species.group %in% c("Unclassified","Other hardwoods", "Unspecified conifers", "Unspecified hardwoods", "Subtotal", "Total"),];
+
 alltrees <- alltrees[,!colnames(alltrees) %in% c("Other", "Total")];
 alltrees <- alltrees[!alltrees$Species.group %in% c("Unclassified","Other hardwoods", "Unspecified conifers", "Unspecified hardwoods", "Subtotal", "Total"),];
 alltrees <- alltrees[!alltrees$Terrestrial.ecozone %in% c("Canada"),];
