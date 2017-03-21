@@ -19,6 +19,29 @@ palette2 <- c("white",
 	"#5764ae", "#6262a7", "#6c60a2", "#755e9d", "#7d5b99", "#855894", "#8d568f", "#94538b",
 	"#884677", "#7f4068", "#763959", "#6c324a", "#612b3c", "#57242e", "#4c1c21");
 
+palette3 <- c("white", 
+	"#fdf8c8", "#f8f4af", "#f4f195", "#f1ed7c",
+	"#ebeb78", "#e9ea7b", "#e7ea7f", "#e5e982", "#e3e884", "#e1e887", "#dfe78a", "#dde78d", "#dae68f", 
+	"#d0e39a", "#c6e0a6", "#bbdeb2", "#b0dbbe",
+	"#aeddd6", "#a3ccd3", "#98bdd1", "#8eafcf", "#84a2cd", "#7b94cc", 
+	"#7b88c3", "#8987c1", "#9686bf", "#a285bd", "#ae84bb", "#ba83b9", "#c681b7", "#d180b5",
+	"#d273ae", "#b7618e", "#a05374", "#89445c", "#733647", "#5f2933", "#4c1c21");
+
+palette4 <- colorRampPalette(
+	c("white", "#fdf8c8", "#019973", "#013b4c" ));
+
+palette5 <- colorRampPalette(
+	c("white", "#fcf497", "#41bb94", "#002733" ), bias = 1);
+
+palette6 <- colorRampPalette(
+	c("#fdf3b4", "#44bb8a", "#1b144f" ));
+
+palette7 <- colorRampPalette(
+	c("#fdf3b4", "#ba4747", "#1b144f" ));
+
+palette8 <- colorRampPalette(
+	c("#fdf3b4", "#70bf54", "#1b144f" ));
+
 trellis.device(
 	device="pdf", 
 	height = 10,
@@ -35,7 +58,7 @@ for (current_tree in treetypes){
 		data = only_current_tree,
 		main = current_tree,
 		colorkey = TRUE,
-		col.regions = palette2,
+		col.regions = palette6,
 		region = TRUE,
 		border = "white",
 		border.lwd = 1,
