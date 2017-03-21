@@ -27,8 +27,8 @@ trellis.device(
 
 for (current_tree in treetypes){
 	only_current_tree <- alltrees_reformatted[which(alltrees_reformatted$tree == current_tree), ]
-	only_current_tree_m <- matrix(only_current_tree$value, ncol = length(ecozones))
-	colnames(only_current_tree_m) <- ecozones;
+	# only_current_tree_m <- matrix(only_current_tree$value, ncol = length(sorted_ecozones))
+	# colnames(only_current_tree_m) <- sorted_ecozones;
 
 	heatmap <- levelplot(		
 		x = value ~ age_range * ecozone,
@@ -38,7 +38,7 @@ for (current_tree in treetypes){
 		col.regions = palette2,
 		region = TRUE,
 		border = "white",
-		border.lwd = 2,
+		border.lwd = 1,
 		# at = seq(0, 4000, 50),
 		at = c(0, 
 			0.01, 0.25, 0.5, 0.75, 1,
