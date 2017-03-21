@@ -20,6 +20,15 @@ for (zoom in zoom_steps){
 	print(scatter);
 }
 
+	bar0 <- barchart(
+		x = value ~ tree, 
+		data = alltrees_reformatted,
+		scales = list(
+			rot = 90
+			)
+		);
+	print(bar0);
+
 	bar1 <- barchart(
 		x = value ~ tree | ecozone, 
 		data = alltrees_reformatted,
