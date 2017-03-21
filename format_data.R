@@ -59,6 +59,9 @@ sorted_ecozones <- unique(alltrees_reformatted_sorted$ecozone);
 
 alltrees_reformatted$ecozone <- factor(rep(ecozones, each = (length(treetypes) * length(alltrees[,c(-1,-2)]))), levels = sorted_ecozones);
 
+alltrees_reformatted[alltrees_reformatted == 0] <- NA;
+
+
 # i <- 1;
 # for (zone in sorted_ecozones){
 # 	levels(alltrees_reformatted$ecozone)[levels(alltrees_reformatted$ecozone) == zone] <- paste(LETTERS[i], zone);	
