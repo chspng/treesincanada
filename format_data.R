@@ -40,6 +40,31 @@ alltrees_reformatted <- data.frame(
 	value = tree_volume
 	);
 
-alltrees_reformatted$tree_and_age <- paste(alltrees_reformatted$tree, alltrees_reformatted$age_range);
+
+# Sort ecozone data
+counts_by_zone <- c();
+i <- 1;
+for (zone in ecozones){
+	elements <- alltrees_reformatted$value[which(alltrees_reformatted$ecozone == zone)];
+	elements <- elements[!is.na(elements)]
+	sum <- Reduce("+", elements);
+	counts_by_zone <- append(counts_by_zone, sum)
+	i <- i + 1;
+}
+alltrees_reformatted$counts <- rep(counts_by_zone, each = (length(treetypes) * length(alltrees[,c(-1,-2)])));
+
+alltrees_reformatted_sorted <- alltrees_reformatted[order(alltrees_reformatted$counts),]
+
+sorted_ecozones <- unique(alltrees_reformatted_sorted$ecozone);
+
+alltrees_reformatted$ecozone <- factor(rep(ecozones, each = (length(treetypes) * length(alltrees[,c(-1,-2)]))), levels = sorted_ecozones);
+
+# i <- 1;
+# for (zone in sorted_ecozones){
+# 	levels(alltrees_reformatted$ecozone)[levels(alltrees_reformatted$ecozone) == zone] <- paste(LETTERS[i], zone);	
+# 	i <- i + 1;
+# }
+
+# levels(alltrees_reformatted$ecozone) <- ordered(sorted_ecozones)
 
 cat("finished formatting data \n");
