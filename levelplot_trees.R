@@ -42,6 +42,11 @@ palette7 <- colorRampPalette(
 palette8 <- colorRampPalette(
 	c("#fdf3b4", "#70bf54", "#1b144f" ));
 
+palette9 <- colorRampPalette(
+	c("#fdf3b4", "#70bf54", "#2a4b7a", "#25154c"));
+
+
+
 trellis.device(
 	device="pdf", 
 	height = 10,
@@ -64,12 +69,11 @@ for (current_tree in treetypes){
 		border.lwd = 0.5,
 		# at = seq(0, 4000, 50),
 		at = c(0, 
-			0.01, 0.25, 0.5, 0.75, 1,
+			seq(0.01, 1, 0.1),
 			seq(1.1, 10, 1),
-			seq(10.1, 50, 10),
-			seq(50.1, 200, 50),
-			seq(200.1, 1000, 100),
-			seq(1000.1, 4000.1, 500)
+			seq(10.1, 100, 10),
+			seq(100.1, 1000, 100),			
+			seq(1000.1, 4000.1, 500)			
 			),
 		cuts = 20,
 		scales = list(
